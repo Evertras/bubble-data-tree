@@ -8,11 +8,6 @@ import (
 	"github.com/evertras/bubble-data-tree/datatree"
 )
 
-const (
-	columnKeyName    = "name"
-	columnKeyElement = "element"
-)
-
 type Trainer struct {
 	Name    string
 	Pokemon []Pokemon
