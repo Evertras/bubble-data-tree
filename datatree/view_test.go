@@ -91,13 +91,13 @@ func TestViewDefaultBlank(t *testing.T) {
 			expected: "123: ok\nabc: def",
 		},
 		{
-			name: "Array Of Integers",
-			data: []int{1, 3, 2},
+			name:     "Array Of Integers",
+			data:     []int{1, 3, 2},
 			expected: "[1 3 2]",
 		},
 		{
-			name: "Array Of Strings",
-			data: []string{"Hello", "Data"},
+			name:     "Array Of Strings",
+			data:     []string{"Hello", "Data"},
 			expected: "- Hello\n- Data",
 		},
 	}
