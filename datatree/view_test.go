@@ -100,6 +100,25 @@ func TestViewDefaultBlank(t *testing.T) {
 			data:     []string{"Hello", "Data"},
 			expected: "- Hello\n- Data",
 		},
+		{
+			name: "Struct With Map And Array Of Strings",
+			data: struct {
+				Name    string
+				Meta    map[string]string
+				Regions []string
+			}{
+				Name: "",
+				Meta: map[string]string{
+					"owner": "evertras",
+				},
+				Regions: []string{"Asia", "North America"},
+			},
+			expected: `Meta:
+  owner: evertras
+Regions:
+  - Asia
+  - North America`,
+		},
 	}
 
 	for _, test := range tests {
