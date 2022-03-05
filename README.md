@@ -1,4 +1,4 @@
-# Bubble-datatree
+# Bubble-data-tree
 
 <p>
   <a href="https://github.com/Evertras/bubble-data-tree/releases"><img src="https://img.shields.io/github/release/Evertras/bubble-data-tree.svg" alt="Latest Release"></a>
