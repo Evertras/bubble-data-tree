@@ -8,6 +8,7 @@ import (
 
 func TestViewBasic(t *testing.T) {
 	var emptyPtr *int
+	intVal := 3
 
 	tests := []struct {
 		name     string
@@ -33,6 +34,11 @@ func TestViewBasic(t *testing.T) {
 			name:     "Integer",
 			data:     17,
 			expected: "17",
+		},
+		{
+			name:     "Integer Pointer",
+			data:     &intVal,
+			expected: "3",
 		},
 		{
 			name: "Single Field Struct",
