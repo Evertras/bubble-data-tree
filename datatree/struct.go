@@ -38,7 +38,7 @@ func (m Model) renderDataNodeStruct(data reflect.Value, indentLevel int) string 
 		}
 
 		result.WriteString(indent)
-		result.WriteString(styleFieldKey.Render(fieldName + ":"))
+		result.WriteString(m.styles.FieldKey.Render(fieldName + ": "))
 
 		result.WriteString(m.renderDataNode(field, indentLevel+1))
 		result.WriteString("\n")
