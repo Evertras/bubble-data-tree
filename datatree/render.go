@@ -7,6 +7,12 @@ import (
 )
 
 func (m *Model) updateContents() {
+	if m.data == nil {
+		m.contents = m.strNil
+
+		return
+	}
+
 	reflected := reflect.ValueOf(m.data)
 
 	m.contents = strings.TrimSpace(m.renderDataNode(reflected, 0))
@@ -15,7 +21,7 @@ func (m *Model) updateContents() {
 func (m Model) renderDataNode(data reflect.Value, indentLevel int) string {
 	for data.Kind() == reflect.Ptr {
 		if data.IsNil() {
-			return "<nil>"
+			return m.strNil
 		}
 
 		data = data.Elem()

@@ -7,11 +7,23 @@ import (
 )
 
 func TestViewBasic(t *testing.T) {
+	var emptyPtr *int
+
 	tests := []struct {
 		name     string
 		data     interface{}
 		expected string
 	}{
+		{
+			name:     "Nil",
+			data:     nil,
+			expected: "<nil>",
+		},
+		{
+			name:     "NilIntPointer",
+			data:     emptyPtr,
+			expected: "<nil>",
+		},
 		{
 			name:     "String",
 			data:     "Hello data tree",
@@ -28,6 +40,14 @@ func TestViewBasic(t *testing.T) {
 				Name string
 			}{"Ralph"},
 			expected: "Name: Ralph",
+		},
+		{
+			name: "Multiple Field Flat Struct",
+			data: struct {
+				Part  string
+				Count int
+			}{"Button", 3},
+			expected: "Count: 3\nPart: Button",
 		},
 	}
 

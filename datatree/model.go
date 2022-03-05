@@ -17,6 +17,8 @@ type Model struct {
 	styles     Styles
 
 	contents string
+
+	strNil string
 }
 
 func New(data interface{}) Model {
@@ -24,6 +26,7 @@ func New(data interface{}) Model {
 		data:       data,
 		indentSize: defaultIndentSize,
 		styles:     styleDefault,
+		strNil:     "<nil>",
 	}
 
 	model.updateContents()
