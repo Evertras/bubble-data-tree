@@ -9,8 +9,10 @@ import (
 )
 
 type Trainer struct {
-	Name    string
-	Pokemon []Pokemon
+	Name     string
+	Age      int
+	Hometown string
+	Pokemon  []Pokemon
 }
 
 type Pokemon struct {
@@ -33,9 +35,16 @@ func NewModel() Model {
 		Types: []string{"Flying"},
 	}
 
+	torterra := Pokemon{
+		Name:  "Torterra",
+		Types: []string{"Grass", "Ground"},
+	}
+
 	ash := Trainer{
-		Name:    "サトシ",
-		Pokemon: []Pokemon{pikachu, pidgey},
+		Name:     "サトシ",
+		Age:      14,
+		Hometown: "Pallet Town",
+		Pokemon:  []Pokemon{pikachu, pidgey, torterra},
 	}
 
 	return Model{

@@ -48,6 +48,19 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 			result.WriteString("\n")
 		}
 
+	case reflect.String:
+		result.WriteString("\n")
+		marginLeft := indentLevel * m.indentSize
+
+		style := lipgloss.NewStyle().MarginLeft(marginLeft)
+
+		for i := 0; i < data.Len(); i++ {
+			entryStr := "- " + data.Index(i).String()
+
+			result.WriteString(style.Render(entryStr))
+			result.WriteString("\n")
+		}
+
 	default:
 		result.WriteString(fmt.Sprintf("%v", data))
 	}
