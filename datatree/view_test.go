@@ -90,18 +90,25 @@ func TestViewDefaultBlank(t *testing.T) {
 			},
 			expected: "123: ok\nabc: def",
 		},
+		{
+			name: "Array Of Integers",
+			data: []int{1, 3, 2},
+			expected: "[1 3 2]",
+		},
+		{
+			name: "Array Of Strings",
+			data: []string{"Hello", "Data"},
+			expected: "- Hello\n- Data",
+		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			// Ensure we get stable results
-			for i := 0; i < 5; i++ {
-				model := New(test.data).WithStyleBlank()
+			model := New(test.data).WithStyleBlank()
 
-				rendered := model.View()
+			rendered := model.View()
 
-				assert.Equal(t, test.expected, rendered)
-			}
+			assert.Equal(t, test.expected, rendered)
 		})
 	}
 }
