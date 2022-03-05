@@ -28,7 +28,7 @@ func (m Model) renderDataNodeMap(data reflect.Value, indentLevel int) string {
 
 	for _, kv := range keyVals {
 		result.WriteString("\n")
-		keyStr := m.styles.FieldKey.Render(kv.key + ":")
+		keyStr := m.styles.FieldKey.Render(kv.key + ": ")
 		result.WriteString(indent + keyStr)
 		result.WriteString(m.renderDataNode(kv.val, indentLevel+1))
 	}
