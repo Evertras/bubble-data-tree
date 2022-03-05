@@ -32,17 +32,17 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 		// TODO: Figure out nested arrays being tighter
 		innerWidth := marginLeft - borderChars
 
+		style := lipgloss.NewStyle().
+			Border(lipgloss.RoundedBorder()).
+			MarginLeft(marginLeft).
+			PaddingLeft(padding).
+			PaddingRight(padding).
+			MaxWidth(innerWidth)
+
 		for i := 0; i < data.Len(); i++ {
 			entryStr := m.renderDataNode(data.Index(i), 0)
 			entryStr = strings.TrimSpace(entryStr)
 			entryStr = wordwrap.String(entryStr, innerWidth)
-
-			style := lipgloss.NewStyle().
-				Border(lipgloss.RoundedBorder()).
-				MarginLeft(marginLeft).
-				PaddingLeft(padding).
-				PaddingRight(padding).
-				MaxWidth(innerWidth)
 
 			result.WriteString(style.Render(entryStr))
 			result.WriteString("\n")
