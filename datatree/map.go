@@ -24,13 +24,13 @@ func (m Model) renderDataNodeMap(data reflect.Value, indentLevel int) string {
 
 	sort.Sort(keyVals)
 
-	for _, kv := range keyVals {
+	for _, entry := range keyVals {
 		result.WriteString("\n")
-		keyStr := m.styles.FieldKey.Render(kv.key + ":")
+		keyStr := m.styles.FieldKey.Render(entry.key + ":")
 
 		result.WriteString(indent + keyStr)
 
-		renderedData := m.renderDataNode(kv.val, indentLevel+1)
+		renderedData := m.renderDataNode(entry.val, indentLevel+1)
 
 		if len(renderedData) == 0 || renderedData[0] != '\n' {
 			result.WriteString(" ")
