@@ -23,6 +23,9 @@ func (m Model) renderDataNode(data reflect.Value, indentLevel int) string {
 
 	var result string
 
+	// Eventually we probably want to be explicit about everything, but for now
+	// we'll take the default shortcut
+	// nolint: exhaustive
 	switch data.Kind() {
 	case reflect.Struct:
 		result = m.renderDataNodeStruct(data, indentLevel)

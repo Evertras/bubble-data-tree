@@ -18,6 +18,9 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 		elemType = elemType.Elem()
 	}
 
+	// Eventually we may want to be explicit about everything, but for now just
+	// use the default shortcut
+	// nolint: exhaustive
 	switch elemType.Kind() {
 	case reflect.Struct, reflect.Array, reflect.Slice:
 		result.WriteString("\n")
