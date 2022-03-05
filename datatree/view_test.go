@@ -6,7 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestViewBasic(t *testing.T) {
+// This is a long function but only because there's a lot of repetitive test
+// cases, not because the logic is complicated
+// nolint: funlen
+func TestViewDefaultBlank(t *testing.T) {
 	var emptyPtr *int
 	intVal := 3
 
@@ -54,6 +57,30 @@ func TestViewBasic(t *testing.T) {
 				Count int
 			}{"Button", 3},
 			expected: "Count: 3\nPart: Button",
+		},
+		{
+			name: "Multiple Field Flat Struct With Unexported",
+			data: struct {
+				Part   string
+				Count  int
+				sneaky int
+			}{"Button", 3, 3},
+			expected: "Count: 3\nPart: Button",
+		},
+		{
+			name: "Struct Zero Value Hidden",
+			data: struct {
+				Part  string
+				Count int
+			}{"", 3},
+			expected: "Count: 3",
+		},
+		{
+			name: "Struct With Pointer Field",
+			data: struct {
+				Count *int
+			}{&intVal},
+			expected: "Count: 3",
 		},
 	}
 
