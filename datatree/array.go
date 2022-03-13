@@ -8,6 +8,8 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
+// This is admittedly getting a bit long, should split this out later...
+// nolint: funlen
 func (m Model) renderDataNodeArray(data reflect.Value, renderCtx renderContext) string {
 	result := strings.Builder{}
 
@@ -38,11 +40,12 @@ func (m Model) renderDataNodeArray(data reflect.Value, renderCtx renderContext) 
 			PaddingRight(padding).
 			MaxWidth(innerWidth)
 
+		const borderWidth = 4
+
 		nestedCtx := renderContext{
-			keyName:     renderCtx.keyName,
-			indentLevel: 0,
-			// Border adjustment
-			extraMarginWidth: renderCtx.extraMarginWidth + 4,
+			keyName:          renderCtx.keyName,
+			indentLevel:      0,
+			extraMarginWidth: renderCtx.extraMarginWidth + borderWidth,
 		}
 
 		for i := 0; i < data.Len(); i++ {

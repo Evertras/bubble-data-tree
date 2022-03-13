@@ -28,15 +28,6 @@ func (m *Model) updateContents() {
 	m.contents = strings.TrimSpace(m.renderDataNode(reflected, renderContext{}))
 }
 
-func isInline(data reflect.Value) bool {
-	switch data.Kind() {
-	case reflect.Struct, reflect.Array, reflect.Map:
-		return false
-	}
-
-	return true
-}
-
 func (m *Model) renderDataNode(data reflect.Value, renderCtx renderContext) string {
 	for data.Kind() == reflect.Ptr {
 		if data.IsNil() {
@@ -64,8 +55,11 @@ func (m *Model) renderDataNode(data reflect.Value, renderCtx renderContext) stri
 	default:
 		result = fmt.Sprintf("%v", data)
 
+		const keySuffixLength = 2
+
 		baseIndentWidth := renderCtx.indentLevel * m.indentSize
-		remainingWidth := m.width - baseIndentWidth - (runewidth.StringWidth(renderCtx.keyName) + 2) - renderCtx.extraMarginWidth
+		keyWidth := (runewidth.StringWidth(renderCtx.keyName) + keySuffixLength)
+		remainingWidth := m.width - baseIndentWidth - keyWidth - renderCtx.extraMarginWidth
 
 		hasNewlines := strings.ContainsAny(result, "\n")
 		isTooLong := m.width > 0 && runewidth.StringWidth(result) > remainingWidth

@@ -138,7 +138,9 @@ Regions:
 				Name        string
 				Description string
 			}{
-				Name:        "Pikachu",
+				Name: "Pikachu",
+				// This is a very long line, that is the point
+				// nolint: lll
 				Description: "Pikachu is a fictional species in the Pokémon media franchise. Designed by Atsuko Nishida and Ken Sugimori, Pikachu first appeared in the 1996 Japanese video games Pokémon Red and Green created by Game Freak and Nintendo, which were released outside of Japan in 1998 as Pokémon Red and Blue. Pikachu is a yellow, mouse-like creature with electrical abilities. It is a major character in the Pokémon franchise, serving as its mascot and as a major mascot for Nintendo.",
 			},
 			expected: `Description:
