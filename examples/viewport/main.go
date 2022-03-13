@@ -10,10 +10,11 @@ import (
 )
 
 type Trainer struct {
-	Name     string
-	Age      int
-	Hometown string
-	Pokemon  []Pokemon
+	Name        string
+	Age         int
+	Hometown    string
+	Description string
+	Pokemon     []Pokemon
 }
 
 type Pokemon struct {
@@ -38,7 +39,7 @@ func NewModel() Model {
 
 	pidgey := Pokemon{
 		Name:        "Pidgey",
-		Description: "Very docile. If attacked, it will often kick up sand to protect itself rather than fight back.",
+		Description: "Very docile.\nIf attacked, it will often kick up sand to protect itself rather than fight back.",
 		Types:       []string{"Normal", "Flying"},
 	}
 
@@ -52,7 +53,10 @@ func NewModel() Model {
 		Name:     "サトシ",
 		Age:      14,
 		Hometown: "Pallet Town",
-		Pokemon:  []Pokemon{pikachu, pidgey, torterra},
+		Description: `Ash Ketchum (Japanese: サトシ Satoshi) is the main character of the Pokémon anime. He is also the main character of various manga based on the anime, including The Electric Tale of Pikachu, Ash & Pikachu, and Pocket Monsters Diamond & Pearl.
+
+He is a Pokémon Trainer from Pallet Town whose goal is to become a Pokémon Master. His starter Pokémon was a Pikachu that he received from Professor Oak after arriving late at his laboratory. In Pokémon the Series: Sun & Moon, he becomes the first Champion of the Alola region's Pokémon League.`,
+		Pokemon: []Pokemon{pikachu, pidgey, torterra},
 	}
 
 	return Model{
