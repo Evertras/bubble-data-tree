@@ -1,8 +1,10 @@
 package datatree
 
 import (
+	"strings"
 	"testing"
 
+	"github.com/mattn/go-runewidth"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,6 +18,7 @@ func TestViewDefaultBlank(t *testing.T) {
 	tests := []struct {
 		name     string
 		data     interface{}
+		width    int
 		expected string
 	}{
 		{
@@ -119,15 +122,54 @@ Regions:
   - Asia
   - North America`,
 		},
+		{
+			name: "Struct string with newlines is nested",
+			data: struct {
+				Description string
+			}{"First\nSecond"},
+			expected: `Description:
+  First 
+  Second`,
+		},
+		{
+			name:  "Long string in struct wraps properly in root",
+			width: 80,
+			data: struct {
+				Name        string
+				Description string
+			}{
+				Name:        "Pikachu",
+				Description: "Pikachu is a fictional species in the Pokémon media franchise. Designed by Atsuko Nishida and Ken Sugimori, Pikachu first appeared in the 1996 Japanese video games Pokémon Red and Green created by Game Freak and Nintendo, which were released outside of Japan in 1998 as Pokémon Red and Blue. Pikachu is a yellow, mouse-like creature with electrical abilities. It is a major character in the Pokémon franchise, serving as its mascot and as a major mascot for Nintendo.",
+			},
+			expected: `Description:
+  Pikachu is a fictional species in the Pokémon media franchise. Designed by    
+  Atsuko Nishida and Ken Sugimori, Pikachu first appeared in the 1996 Japanese  
+  video games Pokémon Red and Green created by Game Freak and Nintendo, which   
+  were released outside of Japan in 1998 as Pokémon Red and Blue. Pikachu is a  
+  yellow, mouse-like creature with electrical abilities. It is a major character
+  in the Pokémon franchise, serving as its mascot and as a major mascot for     
+  Nintendo.                                                                     
+Name: Pikachu`,
+		},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			model := New(test.data).WithStyleBlank()
+			model := New(test.data).WithStyleBlank().WithWidth(test.width)
 
 			rendered := model.View()
 
+			assert.Len(t, rendered, len(test.expected))
+
 			assert.Equal(t, test.expected, rendered)
+
+			if test.width > 0 {
+				lines := strings.Split(rendered, "\n")
+
+				for _, line := range lines {
+					assert.LessOrEqual(t, runewidth.StringWidth(line), test.width)
+				}
+			}
 		})
 	}
 }
