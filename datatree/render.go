@@ -75,7 +75,8 @@ func (m *Model) renderDataNode(data reflect.Value, renderCtx renderContext) stri
 
 			marginIndent := lipgloss.NewStyle().MarginLeft(m.indentSize)
 
-			wrapped := wordwrap.String(result, m.width-nextIndentWith+1-renderCtx.marginRight)
+			// Add one because this checks for <, not <=
+			wrapped := wordwrap.String(result, m.width-nextIndentWith-renderCtx.marginRight+1)
 
 			result = "\n" + marginIndent.Render(wrapped)
 		}
