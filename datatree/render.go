@@ -11,9 +11,9 @@ import (
 )
 
 type renderContext struct {
-	keyName     string
-	indentLevel int
-	marginRight int
+	keyName          string
+	indentLevel      int
+	extraMarginWidth int
 }
 
 func (m *Model) updateContents() {
@@ -65,7 +65,7 @@ func (m *Model) renderDataNode(data reflect.Value, renderCtx renderContext) stri
 		result = fmt.Sprintf("%v", data)
 
 		baseIndentWidth := renderCtx.indentLevel * m.indentSize
-		remainingWidth := m.width - baseIndentWidth - (runewidth.StringWidth(renderCtx.keyName) + 2) - renderCtx.marginRight
+		remainingWidth := m.width - baseIndentWidth - (runewidth.StringWidth(renderCtx.keyName) + 2) - renderCtx.extraMarginWidth
 
 		hasNewlines := strings.ContainsAny(result, "\n")
 		isTooLong := m.width > 0 && runewidth.StringWidth(result) > remainingWidth
@@ -76,7 +76,7 @@ func (m *Model) renderDataNode(data reflect.Value, renderCtx renderContext) stri
 			marginIndent := lipgloss.NewStyle().MarginLeft(m.indentSize)
 
 			// Add one because this checks for <, not <=
-			wrapped := wordwrap.String(result, m.width-nextIndentWith-renderCtx.marginRight+1)
+			wrapped := wordwrap.String(result, m.width-nextIndentWith-renderCtx.extraMarginWidth+1)
 
 			result = "\n" + marginIndent.Render(wrapped)
 		}

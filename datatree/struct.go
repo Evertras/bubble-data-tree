@@ -41,9 +41,9 @@ func (m *Model) renderDataNodeStruct(data reflect.Value, renderCtx renderContext
 		result.WriteString(m.styles.FieldKey.Render(fieldName + ":"))
 
 		nextCtx := renderContext{
-			keyName:     fieldName,
-			indentLevel: renderCtx.indentLevel + 1,
-			marginRight: renderCtx.marginRight,
+			keyName:          fieldName,
+			indentLevel:      renderCtx.indentLevel + 1,
+			extraMarginWidth: renderCtx.extraMarginWidth,
 		}
 		renderedData := m.renderDataNode(field, nextCtx)
 

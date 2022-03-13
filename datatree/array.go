@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/muesli/reflow/wordwrap"
 )
 
 func (m Model) renderDataNodeArray(data reflect.Value, renderCtx renderContext) string {
@@ -41,15 +40,14 @@ func (m Model) renderDataNodeArray(data reflect.Value, renderCtx renderContext) 
 
 		nestedCtx := renderContext{
 			keyName:     renderCtx.keyName,
-			indentLevel: renderCtx.indentLevel,
+			indentLevel: 0,
 			// Border adjustment
-			marginRight: renderCtx.marginRight + 2,
+			extraMarginWidth: renderCtx.extraMarginWidth + 4,
 		}
 
 		for i := 0; i < data.Len(); i++ {
 			entryStr := m.renderDataNode(data.Index(i), nestedCtx)
 			entryStr = strings.TrimSpace(entryStr)
-			entryStr = wordwrap.String(entryStr, innerWidth)
 
 			result.WriteString(style.Render(entryStr))
 			result.WriteString("\n")

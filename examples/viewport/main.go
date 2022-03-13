@@ -18,6 +18,7 @@ type Trainer struct {
 }
 
 type Pokemon struct {
+	Age         int
 	Name        string
 	Description string
 	Types       []string
@@ -51,6 +52,13 @@ Pikachu is widely considered to be the most popular and well-known Pokémon spec
 		Types:       []string{"Grass", "Ground"},
 	}
 
+	dragonite := Pokemon{
+		Age:         3,
+		Name:        "Dragonite",
+		Description: "Dragonite is a draconic, bipedal Pokémon with light orange skin.",
+		Types:       []string{"Dragon", "Flying"},
+	}
+
 	ash := Trainer{
 		Name:     "サトシ",
 		Age:      14,
@@ -58,7 +66,7 @@ Pikachu is widely considered to be the most popular and well-known Pokémon spec
 		Description: `Ash Ketchum (Japanese: サトシ Satoshi) is the main character of the Pokémon anime. He is also the main character of various manga based on the anime, including The Electric Tale of Pikachu, Ash & Pikachu, and Pocket Monsters Diamond & Pearl.
 
 He is a Pokémon Trainer from Pallet Town whose goal is to become a Pokémon Master. His starter Pokémon was a Pikachu that he received from Professor Oak after arriving late at his laboratory. In Pokémon the Series: Sun & Moon, he becomes the first Champion of the Alola region's Pokémon League.`,
-		Pokemon: []Pokemon{pikachu, pidgey, torterra},
+		Pokemon: []Pokemon{pikachu, pidgey, torterra, dragonite},
 	}
 
 	return Model{

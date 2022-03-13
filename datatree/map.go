@@ -31,9 +31,9 @@ func (m *Model) renderDataNodeMap(data reflect.Value, renderCtx renderContext) s
 		result.WriteString(indent + keyStr)
 
 		nextCtx := renderContext{
-			indentLevel: renderCtx.indentLevel + 1,
-			keyName:     entry.key,
-			marginRight: renderCtx.marginRight,
+			indentLevel:      renderCtx.indentLevel + 1,
+			keyName:          entry.key,
+			extraMarginWidth: renderCtx.extraMarginWidth,
 		}
 
 		renderedData := m.renderDataNode(entry.val, nextCtx)
