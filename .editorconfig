@@ -11,5 +11,9 @@ end_of_line = lf
 indent_size = 4
 indent_style = tab
 
+[datatree/view_test.go]
+# There are some specific trailing whitespace tests in this file, don't erase!
+trim_trailing_whitespace = false
+
 [Makefile]
 indent_style = tab

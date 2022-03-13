@@ -20,3 +20,11 @@ func (m Model) WithStyleBlank() Model {
 
 	return m
 }
+
+func (m Model) WithWidth(width int) Model {
+	m.width = width
+
+	m.updateContents()
+
+	return m
+}

@@ -6,10 +6,11 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/lipgloss"
-	"github.com/muesli/reflow/wordwrap"
 )
 
-func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
+// This is admittedly getting a bit long, should split this out later...
+// nolint: funlen
+func (m Model) renderDataNodeArray(data reflect.Value, renderCtx renderContext) string {
 	result := strings.Builder{}
 
 	elemType := data.Type().Elem()
@@ -27,7 +28,7 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 		const borderChars = 2
 		const padding = 1
 
-		marginLeft := indentLevel*m.indentSize - borderChars
+		marginLeft := renderCtx.indentLevel*m.indentSize - borderChars
 
 		// TODO: Figure out nested arrays being tighter
 		innerWidth := marginLeft - borderChars
@@ -39,10 +40,17 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 			PaddingRight(padding).
 			MaxWidth(innerWidth)
 
+		const borderWidth = 4
+
+		nestedCtx := renderContext{
+			keyName:          renderCtx.keyName,
+			indentLevel:      0,
+			extraMarginWidth: renderCtx.extraMarginWidth + borderWidth,
+		}
+
 		for i := 0; i < data.Len(); i++ {
-			entryStr := m.renderDataNode(data.Index(i), 0)
+			entryStr := m.renderDataNode(data.Index(i), nestedCtx)
 			entryStr = strings.TrimSpace(entryStr)
-			entryStr = wordwrap.String(entryStr, innerWidth)
 
 			result.WriteString(style.Render(entryStr))
 			result.WriteString("\n")
@@ -50,7 +58,7 @@ func (m Model) renderDataNodeArray(data reflect.Value, indentLevel int) string {
 
 	case reflect.String:
 		result.WriteString("\n")
-		marginLeft := indentLevel * m.indentSize
+		marginLeft := renderCtx.indentLevel * m.indentSize
 
 		style := lipgloss.NewStyle().MarginLeft(marginLeft)
 

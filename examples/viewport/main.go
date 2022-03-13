@@ -18,6 +18,7 @@ type Trainer struct {
 }
 
 type Pokemon struct {
+	Age         int
 	Name        string
 	Description string
 	Types       []string
@@ -32,9 +33,11 @@ type Model struct {
 
 func NewModel() Model {
 	pikachu := Pokemon{
-		Name:        "Pikachu",
-		Description: "Pikachu that can generate powerful electricity have cheek sacs that are extra soft and super stretchy.",
-		Types:       []string{"Electric"},
+		Name: "Pikachu",
+		Description: `Pikachu is a fictional species in the Pokémon media franchise. Designed by Atsuko Nishida and Ken Sugimori, Pikachu first appeared in the 1996 Japanese video games Pokémon Red and Green created by Game Freak and Nintendo, which were released outside of Japan in 1998 as Pokémon Red and Blue. Pikachu is a yellow, mouse-like creature with electrical abilities. It is a major character in the Pokémon franchise, serving as its mascot and as a major mascot for Nintendo.
+
+Pikachu is widely considered to be the most popular and well-known Pokémon species, largely due to its appearance in the Pokémon anime television series as the companion of protagonist Ash Ketchum. In most vocalized appearances Pikachu is voiced by Ikue Ōtani, though it has been portrayed by other actors, notably Ryan Reynolds in the live-action animated film Pokémon Detective Pikachu. Pikachu has been well received by critics, with particular praise given for its cuteness, and has come to be regarded as an icon of Japanese pop culture.`,
+		Types: []string{"Electric"},
 	}
 
 	pidgey := Pokemon{
@@ -49,6 +52,13 @@ func NewModel() Model {
 		Types:       []string{"Grass", "Ground"},
 	}
 
+	dragonite := Pokemon{
+		Age:         3,
+		Name:        "Dragonite",
+		Description: "Dragonite is a draconic, bipedal Pokémon with light orange skin.",
+		Types:       []string{"Dragon", "Flying"},
+	}
+
 	ash := Trainer{
 		Name:     "サトシ",
 		Age:      14,
@@ -56,7 +66,7 @@ func NewModel() Model {
 		Description: `Ash Ketchum (Japanese: サトシ Satoshi) is the main character of the Pokémon anime. He is also the main character of various manga based on the anime, including The Electric Tale of Pikachu, Ash & Pikachu, and Pocket Monsters Diamond & Pearl.
 
 He is a Pokémon Trainer from Pallet Town whose goal is to become a Pokémon Master. His starter Pokémon was a Pikachu that he received from Professor Oak after arriving late at his laboratory. In Pokémon the Series: Sun & Moon, he becomes the first Champion of the Alola region's Pokémon League.`,
-		Pokemon: []Pokemon{pikachu, pidgey, torterra},
+		Pokemon: []Pokemon{pikachu, pidgey, torterra, dragonite},
 	}
 
 	return Model{
@@ -85,6 +95,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 	case tea.WindowSizeMsg:
+		m.simpleTree = m.simpleTree.WithWidth(msg.Width)
 		// The help message at top
 		const headerHeight = 3
 		if !m.ready {

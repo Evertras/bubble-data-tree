@@ -13,6 +13,7 @@ const (
 type Model struct {
 	data       interface{}
 	indentSize int
+	width      int
 	showZero   bool
 	styles     Styles
 

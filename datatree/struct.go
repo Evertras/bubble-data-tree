@@ -6,9 +6,9 @@ import (
 	"strings"
 )
 
-func (m Model) renderDataNodeStruct(data reflect.Value, indentLevel int) string {
+func (m *Model) renderDataNodeStruct(data reflect.Value, renderCtx renderContext) string {
 	result := strings.Builder{}
-	indent := strings.Repeat(" ", indentLevel*m.indentSize)
+	indent := strings.Repeat(" ", renderCtx.indentLevel*m.indentSize)
 
 	fieldNames := []string{}
 
@@ -40,16 +40,19 @@ func (m Model) renderDataNodeStruct(data reflect.Value, indentLevel int) string 
 		result.WriteString(indent)
 		result.WriteString(m.styles.FieldKey.Render(fieldName + ":"))
 
-		renderedData := m.renderDataNode(field, indentLevel+1)
+		nextCtx := renderContext{
+			keyName:          fieldName,
+			indentLevel:      renderCtx.indentLevel + 1,
+			extraMarginWidth: renderCtx.extraMarginWidth,
+		}
+		renderedData := m.renderDataNode(field, nextCtx)
 
-		if len(renderedData) == 0 || renderedData[0] != '\n' {
+		if len(renderedData) != 0 && renderedData[0] != '\n' {
 			result.WriteString(" ")
 		}
 
 		result.WriteString(renderedData)
 		result.WriteString("\n")
-
-		continue
 	}
 
 	return result.String()

@@ -7,9 +7,9 @@ import (
 	"strings"
 )
 
-func (m Model) renderDataNodeMap(data reflect.Value, indentLevel int) string {
+func (m *Model) renderDataNodeMap(data reflect.Value, renderCtx renderContext) string {
 	result := strings.Builder{}
-	indent := strings.Repeat(" ", indentLevel*m.indentSize)
+	indent := strings.Repeat(" ", renderCtx.indentLevel*m.indentSize)
 
 	iter := data.MapRange()
 
@@ -30,9 +30,19 @@ func (m Model) renderDataNodeMap(data reflect.Value, indentLevel int) string {
 
 		result.WriteString(indent + keyStr)
 
-		renderedData := m.renderDataNode(entry.val, indentLevel+1)
+		nextCtx := renderContext{
+			indentLevel:      renderCtx.indentLevel + 1,
+			keyName:          entry.key,
+			extraMarginWidth: renderCtx.extraMarginWidth,
+		}
 
-		if len(renderedData) == 0 || renderedData[0] != '\n' {
+		renderedData := m.renderDataNode(entry.val, nextCtx)
+
+		if len(renderedData) == 0 {
+			continue
+		}
+
+		if renderedData[0] != '\n' {
 			result.WriteString(" ")
 		}
 
