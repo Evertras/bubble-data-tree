@@ -3,6 +3,7 @@ module github.com/evertras/bubble-data-tree
 go 1.17
 
 require (
+	github.com/charmbracelet/bubbles v0.10.3
 	github.com/charmbracelet/bubbletea v0.19.3
 	github.com/charmbracelet/lipgloss v0.4.0
 	github.com/muesli/reflow v0.3.0

@@ -2,6 +2,10 @@
 example-simple:
 	@go run ./examples/simple/*.go
 
+.PHONY: example-viewport
+example-viewport:
+	@go run ./examples/viewport/*.go
+
 .PHONY: test
 test:
 	@go test -race -cover ./datatree
